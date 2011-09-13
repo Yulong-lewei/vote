@@ -14,7 +14,12 @@ class VotesController < ApplicationController
   # GET /votes/1.json
   def show
     @vote = Vote.find(params[:id])
-
+#  vote.options.each do |op|
+#   if params[:options].include?(op.id)
+#	  	op.quantity += 1
+#    	op.save!
+#    end
+#  end
 
     respond_to do |format|
       format.html # show.html.erb
