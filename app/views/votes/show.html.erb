@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @vote.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @vote.description %>
+</p>
+<form action="/" method="post">
+<% for option in @vote.options %>
+	<%= option.name%><input type="radio" name="op[]" value="options" /><br />
+<%	end	%>
+<input type="submit" value="Submit" />
+</form>
+<%= link_to 'Edit', edit_vote_path(@vote) %> |
+<%= link_to 'Back', votes_path %>

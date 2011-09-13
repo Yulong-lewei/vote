@@ -1,0 +1,12 @@
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+<h1>Your Votes</h1>
+<% @votes.each do |vote| %>
+
+<h3><%= vote.name %></h3>
+<span ><%= vote.description %></span>
+<span	><%= link_to '-->Vote me ', vote%></span>
+
+<% end %>
+
