@@ -9,11 +9,23 @@
   <b>Description:</b>
   <%= @vote.description %>
 </p>
-<form action="/" method="post">
-<% for option in @vote.options %>
-	<%= option.name%><input type="radio" name="op[]" value="options" /><br />
-<%	end	%>
-<input type="submit" value="Submit" />
-</form>
+	<form action="/votes/vote" method="post">
+		<% for option in @vote.options %>
+			<%= option.name%><input type="checkbox" name="op[]" value="<%= option.id %>" /><br />
+		<%	end	%>
+		<input type="hidden" value="<%= @vote.id %>" name="id"/>
+		<input type="submit" value="Submit" />
+	</form>
+
+
+
+<% @vote.options.each do |e| %>
+
+<%= image_tag("vote.gif", :height => 20,:width=> "#{e.quantity*100}") %>
+	<%= e.quantity %><br/>
+
+<% end %>
+
+
 <%= link_to 'Edit', edit_vote_path(@vote) %> |
 <%= link_to 'Back', votes_path %>

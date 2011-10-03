@@ -14,6 +14,7 @@ class VotesController < ApplicationController
   # GET /votes/1.json
   def show
     @vote = Vote.find(params[:id])
+    
 #  vote.options.each do |op|
 #   if params[:options].include?(op.id)
 #	  	op.quantity += 1
@@ -84,6 +85,18 @@ class VotesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to votes_url }
       format.json { head :ok }
+    end
+  end
+
+  def vote
+    vote = Vote.find(params[:id])
+    options = params[:op].each do |option_id|
+      op = Option.find(option_id)
+      op.quantity += 1
+      op.save
+    end
+    respond_to do |format|
+      format.html { redirect_to vote }
     end
   end
 end

@@ -3,6 +3,13 @@
 		<p >
 			<%= f.label :name,"Option"	%>
 			<%= f.text_field :name	%>
-			<%= link_to_remove_fields "remove",f	%>
+<input type="text" name="options[]"/>
+
+<a onclick="remove_parent(this);return false;">Remove</a>
 		</p>
 </div >
+<script type="text/javascript">
+	function remove_parent(node){
+		node.parentNode.innerHTML = "";
+	}
+</script>

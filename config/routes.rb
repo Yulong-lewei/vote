@@ -3,7 +3,11 @@ Votenew::Application.routes.draw do
 
   get "home/index"
 
-  resources :votes
+  resources :votes do 
+	collection do 
+		post :vote
+	end
+  end
 
   devise_for :users
 
