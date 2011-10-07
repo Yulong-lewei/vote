@@ -17,15 +17,88 @@
 		<input type="submit" value="Submit" />
 	</form>
 
-
-
+#条形图
+<fieldset>
+<legend>投票结果</legend>
 <% @vote.options.each do |e| %>
 
-<%= image_tag("vote.gif", :height => 20,:width=> "#{e.quantity*100}") %>
+<%= image_tag("vote.gif",:id=>"image", :height => 20,:width=> "#{e.quantity*500/(@vote.totalnumber)}") %>
 	<%= e.quantity %><br/>
 
 <% end %>
+</fieldset>
 
+<h2>Add a comment:</h2>
+<%= form_for([@vote, @vote.comments.build]) do |f| %>
+
+  <div class="field">
+    <%= f.label :body %><br />
+    <%= f.text_area :body %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<h2>Comments</h2>
+<% for comment in @vote.comments %>
+  <p>
+    <b>用户:</b>
+		<%= comment.user%>
+  </p>
+ 
+  <p>
+    <b>Comment:</b>
+    <%= comment.body %>
+  </p>
+<% end %>
 
 <%= link_to 'Edit', edit_vote_path(@vote) %> |
 <%= link_to 'Back', votes_path %>
+
+
+<script>
+
+function $(tagName){
+    return document.getElementsByTagName(tagName);
+}
+
+window.onload=function(){
+		var img= $("img")  //找出img元素
+		for (var i=0;i<img.length;i++){  //遍历img
+    var oDiv=$("img")[i];
+
+		var width=$("img")[i].width
+
+    animate(oDiv,'width',1,0,width,10)
+}}
+function animate(o,attr,add,start,end,t){
+
+var max=Math.max(start,end)
+    min=Math.min(start,end)
+
+
+var interval=setInterval(function(){
+    
+
+    if(add>0){
+    if (min>=max)
+    {
+    clearInterval(interval)
+    }
+
+    min+=add;
+    o.style[attr]=min+"px";
+    }else{
+    if (max<=min)
+    {
+    clearInterval(interval)
+    }
+
+    max+=add;
+    o.style[attr]=max+"px";
+    }
+   
+    
+},t)
+}
+</script>

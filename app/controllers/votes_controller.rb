@@ -14,7 +14,6 @@ class VotesController < ApplicationController
   # GET /votes/1.json
   def show
     @vote = Vote.find(params[:id])
-    
 #  vote.options.each do |op|
 #   if params[:options].include?(op.id)
 #	  	op.quantity += 1
@@ -48,9 +47,14 @@ class VotesController < ApplicationController
   # POST /votes.json
   def create
     @vote = Vote.new(params[:vote])
-
+		@vote.calculate_total
+				if (current_user)		
+					@vote.user_id=current_user.id 
+				end
     respond_to do |format|
       if @vote.save
+		
+
         format.html { redirect_to @vote, notice: 'Vote was successfully created.' }
         format.json { render json: @vote, status: :created, location: @vote }
       else
@@ -90,10 +94,13 @@ class VotesController < ApplicationController
 
   def vote
     vote = Vote.find(params[:id])
-    options = params[:op].each do |option_id|
-      op = Option.find(option_id)
+		vote.calculate_total		
+
+    options = params[:op].each do |oa|
+      op = Option.find(oa)
       op.quantity += 1
       op.save
+		
     end
     respond_to do |format|
       format.html { redirect_to vote }

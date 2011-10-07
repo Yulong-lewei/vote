@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110912151808) do
+ActiveRecord::Schema.define(:version => 20111005130127) do
+
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.text     "body"
+    t.integer  "vote_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+  add_index "comments", ["vote_id"], :name => "index_comments_on_vote_id"
 
   create_table "options", :force => true do |t|
     t.string   "name"
@@ -44,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20110912151808) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "totalnumber", :default => 0
+    t.integer  "user_id"
   end
 
 end
