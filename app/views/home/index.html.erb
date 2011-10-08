@@ -1,6 +1,15 @@
 <% if notice %>
 <p id="notice"><%= notice %></p>
 <% end %>
+<div id="side">
+<% if current_user.present?	%>
+<h2>我参与的投票</h2>
+	<% myvote=Vote.where("user_id =	?",current_user.id) %>
+	<% myvote.each do |myvote|%>
+	<%= myvote.name	%><%= link_to '-->Vote me ', myvote%><br	/>
+	<%end%>
+<%	end	%>
+</div>
 <h1>Your Votes</h1>
 <% @votes.each do |vote| %>
 
@@ -9,4 +18,3 @@
 <span	><%= link_to '-->Vote me ', vote%></span>
 
 <% end %>
-

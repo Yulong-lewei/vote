@@ -5,3 +5,16 @@
  *= require_self
  *= require_tree . 
 */
+#side {
+float: right;
+padding-top: 1em;
+padding-left: 1em;
+padding-bottom: 1em;
+width: 12em;
+
+}
+#side a {
+
+font-size: small;
+}
+

@@ -1,7 +1,7 @@
 class Vote < ActiveRecord::Base
 	has_many :options, :dependent => :destroy
  belongs_to :user
- def calculate_total
+ 	def calculate_total
     self.totalnumber = self.options.inject(0){ |sum,vote| sum+vote.quantity }
     save!
   end

@@ -9,15 +9,24 @@
   <b>Description:</b>
   <%= @vote.description %>
 </p>
-	<form action="/votes/vote" method="post">
+<!--用这段代码会导致用户logout
+<form action="/votes/vote" method="post">
 		<% for option in @vote.options %>
 			<%= option.name%><input type="checkbox" name="op[]" value="<%= option.id %>" /><br />
 		<%	end	%>
 		<input type="hidden" value="<%= @vote.id %>" name="id"/>
 		<input type="submit" value="Submit" />
 	</form>
+-->
+<%=	form_tag(:controller => "votes",:action => "vote")	do %>
+<% for option in @vote.options %>
+			<%= option.name%><input type="checkbox" name="op[]" value="<%= option.id %>" /><br />
+		<%	end	%>
+		<input type="hidden" value="<%= @vote.id %>" name="id"/>
 
-#条形图
+ <%= submit_tag("commit") %>
+<%	end	%>
+
 <fieldset>
 <legend>投票结果</legend>
 <% @vote.options.each do |e| %>
@@ -27,31 +36,25 @@
 
 <% end %>
 </fieldset>
-
-<h2>Add a comment:</h2>
-<%= form_for([@vote, @vote.comments.build]) do |f| %>
-
-  <div class="field">
-    <%= f.label :body %><br />
-    <%= f.text_area :body %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-<h2>Comments</h2>
-<% for comment in @vote.comments %>
-  <p>
-    <b>用户:</b>
-		<%= comment.user%>
-  </p>
- 
-  <p>
-    <b>Comment:</b>
-    <%= comment.body %>
-  </p>
-<% end %>
-
+	<%if @vote.comments.empty?%>
+	<p>
+	<h3>No comment,Please add your comment below</h3>	
+	</p>	
+	<%	else	%>
+	<h2>Comments</h2>
+		<% @vote.comments.each do |comment| %>
+			<p>
+			 comment:
+				<%= comment.body %>
+			</p>
+		<% end %>
+	<%	end	%>
+<% if current_user.present?	%>
+	<h2>Add a comment:</h2>
+	<%= render "comments/form" %>
+<%else%>
+<h2>Please Log in before you make comments</h2>
+<%	end	%>
 <%= link_to 'Edit', edit_vote_path(@vote) %> |
 <%= link_to 'Back', votes_path %>
 
